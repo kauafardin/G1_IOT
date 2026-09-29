@@ -1,0 +1,8 @@
+name = "sensor-sala"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"                 # e o env.DB usado no worker.js
+database_name = "sensor_sala"
+database_id = "f507611a-dfea-4cc5-9d81-36d72317cb9f"
