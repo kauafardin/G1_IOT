@@ -16,12 +16,11 @@
 
 | Arquivo | O que é |
 |---|---|
-| `sketch.ino` | firmware do ESP32 (R1 a R4 e R7) |
-| `diagram.json` | circuito do Wokwi (mesmo do link acima) |
 | `worker.js` | Worker da Cloudflare com os 2 POST e os 4 GET |
-| `schema.sql` | `CREATE TABLE` das tabelas `movimentos` e `luz` |
-| `wrangler.toml` | ligação do Worker com o banco D1 |
 | `prints/` | as imagens usadas na seção 8 |
+
+O `sketch.ino` e o `diagram.json` estão no projeto do Wokwi, no link acima
+(abas **sketch.ino** e **diagram.json**).
 
 ---
 
@@ -190,7 +189,21 @@ npx wrangler@3 d1 execute sensor_sala --remote --file=./schema.sql
 npx wrangler@3 deploy
 ```
 
-Para publicar de novo depois de mudar o `worker.js`, basta `npx wrangler@3 deploy` nesta pasta.
+Para publicar de novo, basta um `wrangler.toml` ao lado do `worker.js` com este conteúdo
+e rodar `npx wrangler@3 deploy`:
+
+```toml
+name = "sensor-sala"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"                 # e o env.DB usado no worker.js
+database_name = "sensor_sala"
+database_id = "f507611a-dfea-4cc5-9d81-36d72317cb9f"
+```
+
+(o `schema.sql` do comando acima é exatamente o bloco `CREATE TABLE` da seção 3)
 
 ### Testes feitos nos endpoints
 
